@@ -1,0 +1,54 @@
+{
+    "name": "controles",
+    "maps": [
+        {
+            "name": "personaje",
+            "id": "17fe9401-cd25-40b5-b6df-3a057a398d48",
+            "actions": [
+                {
+                    "name": "mov",
+                    "type": "Value",
+                    "id": "9334a2d3-2f99-4248-9c23-d5fd34a71f24",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "rot",
+                    "type": "Value",
+                    "id": "deedf92d-d9ee-4b51-a100-3ed420acc5ca",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "45077b66-446f-4d85-ab64-bd7a80adf616",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "mov",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86bd6bd1-dcb9-468a-9ddb-963d2050baaa",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

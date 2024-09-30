@@ -5,9 +5,14 @@ using UnityEngine;
 public class basepuzle : MonoBehaviour
 {
     public GameObject camara;
-    public GameObject punto;
+    public GameObject puntopuzzle;
+    public GameObject puntooriginal;
+
     Vector3 posicioncamara;
-    bool cambio = false;
+    public int puzzle;
+
+    public GameObject panelcontroles;
+    public GameObject panelpuzzle;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +25,8 @@ public class basepuzle : MonoBehaviour
     void OnTouch()
     {
         // gameObject.SetActive(false);
-        posicioncamara = camara.transform.position;
-        cambio = true;
+       // posicioncamara = camara.transform.position;
+        StartCoroutine(cambiocamara());
         // Aquí puedes agregar la función que quieres ejecutar
     }
 
@@ -69,4 +74,54 @@ public class basepuzle : MonoBehaviour
     }*/
     }
    
+    IEnumerator cambiocamara()
+    {
+       
+        // camara.gameObject.transform.position = punto.transform.position;
+        while (Vector3.Distance(camara.transform.position, puntopuzzle.transform.position) > 0.01f)
+        {
+        yield return new WaitForSeconds(0.001f);
+ print("asdasd");
+            camara.transform.position = Vector3.Lerp(camara.transform.position, puntopuzzle.transform.position, 2 * Time.deltaTime);
+            camara.gameObject.transform.LookAt(gameObject.transform);
+        }
+        cambiaruipuzle();
+
+        if (puzzle == 1)
+        {
+            gameObject.GetComponent<puzzlecandado>().aparecer = true;
+        }
+        //StopCoroutine(cambiocamara());
+        // camara.gameObject.transform.LookAt(gameObject.transform);
+        }
+    IEnumerator volvercambiocamara()
+    {
+        while (Vector3.Distance(camara.transform.position, puntooriginal.transform.position) > 0.01f)
+        {
+            yield return new WaitForSeconds(0.001f);
+            print("asdasd");
+            camara.transform.position = Vector3.Lerp(camara.transform.position, puntooriginal.transform.position, 2 * Time.deltaTime);
+            camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, puntooriginal.transform.rotation, 2 * Time.deltaTime);
+
+            //camara.gameObject.transform.LookAt(gameObject.transform);
+        }
+        cambiaruicontroles();
+        gameObject.SetActive(false);
+
+    }
+
+    public void cambiaruipuzle()
+    {
+        panelcontroles.SetActive(false);
+        panelpuzzle.SetActive(true);
 }
+
+
+
+    public void cambiaruicontroles()
+    {
+        panelcontroles.SetActive(true);
+        panelpuzzle.SetActive(false);
+    }
+}
+

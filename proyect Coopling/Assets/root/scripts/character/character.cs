@@ -29,23 +29,28 @@ public class character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   
+   //rotacion camara
         if (rotacion.x != 0)
         {
 
-        //gameObject.transform.rotation = Quaternion.Euler(0, rotacion.x * 360, 0);
+       
             transform.rotation = transform.rotation * Quaternion.Euler(0, rotacion.x, 0);
 
         }
+    //-------------------------------------------
     }
     private void FixedUpdate()
     {
-       // player_rb.velocity = new Vector3(meveinput.x * speed, player_rb.velocity.y, meveinput.y * speed);
+    // movimiento
         direccion = meveinput.y * transform.forward + meveinput.x * transform.right;
 
         player_rb.velocity = direccion * speed + new Vector3(0, player_rb.velocity.y, 0);
 
+    //-------------------------------------------
+
     }
+
+    //leer controles
     public void mov(InputAction.CallbackContext context)
     {
         print("mov");
@@ -59,6 +64,7 @@ public class character : MonoBehaviour
       
     }
 
+    //-------------------------------------------
 
 
 
@@ -72,5 +78,6 @@ public class character : MonoBehaviour
 
 
 
-  
+
+
 }

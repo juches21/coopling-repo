@@ -22,7 +22,7 @@ public class basepuzle : MonoBehaviour
     // Update is called once per frame
  
 
-    void OnTouch()
+    public void OnTouch()
     {
         // gameObject.SetActive(false);
        // posicioncamara = camara.transform.position;
@@ -83,7 +83,7 @@ public class basepuzle : MonoBehaviour
         yield return new WaitForSeconds(0.001f);
  print("asdasd");
             camara.transform.position = Vector3.Lerp(camara.transform.position, puntopuzzle.transform.position, 2 * Time.deltaTime);
-            camara.gameObject.transform.LookAt(gameObject.transform);
+            camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, puntopuzzle.transform.rotation, 2 * Time.deltaTime);
         }
         cambiaruipuzle();
 
@@ -101,8 +101,8 @@ public class basepuzle : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
             print("asdasd");
             camara.transform.position = Vector3.Lerp(camara.transform.position, puntooriginal.transform.position, 2 * Time.deltaTime);
-            camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, puntooriginal.transform.rotation, 2 * Time.deltaTime);
 
+            camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, puntooriginal.transform.rotation, 2 * Time.deltaTime);
             //camara.gameObject.transform.LookAt(gameObject.transform);
         }
         cambiaruicontroles();

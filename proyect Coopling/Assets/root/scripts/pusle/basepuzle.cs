@@ -81,7 +81,6 @@ public class basepuzle : MonoBehaviour
         while (Vector3.Distance(camara.transform.position, puntopuzzle.transform.position) > 0.01f)
         {
         yield return new WaitForSeconds(0.001f);
- print("asdasd");
             camara.transform.position = Vector3.Lerp(camara.transform.position, puntopuzzle.transform.position, 2 * Time.deltaTime);
             camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, puntopuzzle.transform.rotation, 2 * Time.deltaTime);
         }

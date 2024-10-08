@@ -3,17 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class NewBehaviourScript : MonoBehaviour
+public class puzleespejos : MonoBehaviour
 {
+    public GameObject controlador;
+
+    public int id;
     public int rotacion;
     public int posicion;
-    public int posicion_correcta;
-    public GameObject rayo;
+    public int posicion_inicial;
+    public GameObject rayog;
+    bool x = true;
+    bool y = true;
+
+    public int actibador = 0;
+    public GameObject objetoImpactado;
+    public bool impacto = false;
+
+
+    float longitudRayo = 20f;
     // Start is called before the first frame update
     void Start()
     {
+        posicion = posicion_inicial;
+        RotarEspejo();
     }
-    void OnTouch()
+
+
+    void RotarEspejo()
     {
         posicion++;
         switch (posicion)
@@ -43,7 +59,7 @@ public class NewBehaviourScript : MonoBehaviour
                 rotacion = 315;
                 break;
             default:
-                rotacion = 0; 
+                rotacion = 0;
                 posicion = 0;
                 break;
         }
@@ -64,51 +80,146 @@ public class NewBehaviourScript : MonoBehaviour
             {
                 // Convertir el toque en un Raycast
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                RaycastHit hit;
+                RaycastHit hit1;
 
                 // Verificar si el Raycast impacta un objeto con collider
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit1))
                 {
                     // Si el objeto tocado es este GameObject
-                    if (hit.transform == transform)
+                    if (hit1.transform == transform)
                     {
-                        OnTouch(); // Ejecutar la función si se toca el objeto
+                        RotarEspejo(); // Ejecutar la funciï¿½n si se toca el objeto
                     }
                 }
             }
         }
 
 
-        if (posicion == posicion_correcta)
+
+        if (impacto)
         {
-            rayo.SetActive(true);
+            if (x)
+            {
+                x = false;
+                y = true;
+                rayog.SetActive(true);
+                controlador.GetComponent<controladorpuzleespejos>().listar(id);
+            }
         }
         else
         {
-            rayo.SetActive(false);
+            if (y)
+            {
+                y = false;
+                x = true;
+                rayog.SetActive(false);
 
+                controlador.GetComponent<controladorpuzleespejos>().borrar(id);
+                actibador = 0;
+            }
         }
-    }
 
 
-    IEnumerator cambiocamara()
-    {
-      
-        // camara.gameObject.transform.position = punto.transform.position;
-        while (Mathf.Abs(gameObject.transform.eulerAngles.y - rotacion) > 00.1f)
+
+
+
+
+
+
+        Vector3 origenRayo = transform.position + new Vector3(0, 0.2f, 0);
+
+        // Direcciï¿½n del rayo (hacia adelante desde el objeto)
+        Vector3 direccionRayo = transform.right;
+
+        // Crear el rayo y verificar si golpea algo
+        Ray rayo = new Ray(origenRayo, direccionRayo);
+        RaycastHit hit;
+
+        // Dibujar el rayo en la escena (opcional, para depuraciï¿½n)
+        Debug.DrawRay(origenRayo, direccionRayo * longitudRayo, Color.red);
+
+        // Si el rayo choca con algo en un rango de 10 unidades
+        if (impacto)
         {
-            // Esperar 0.001 segundos entre cada movimiento
-            yield return new WaitForSeconds(0.001f);
 
-            // Crear un Quaternion a partir de la rotación deseada en el eje Y
-            Quaternion rotacionDeseada = Quaternion.Euler(0, rotacion, 0);
+            if (Physics.Raycast(rayo, out hit, longitudRayo))
+            {
+                // Mostrar el nombre del objeto con el que choca
+                if (hit.collider.CompareTag("Espejo"))
+                {
 
-            // Interpolar la rotación actual hacia la rotación deseada
-            gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotacionDeseada, 2 * Time.deltaTime);
+
+                    if (objetoImpactado == null)
+                    {
+                        // Si antes no habia impacto y ahora hay, el rayo ha impactado por primera vez
+                        objetoImpactado = hit.collider.gameObject;
+                        hit.collider.GetComponent<puzleespejos>().impacto = true;
+                        Debug.Log("El rayo ha comenzado a impactar: " + objetoImpactado.name);
+                        if (objetoImpactado.GetComponent<Collider>().GetComponent<puzleespejos>().actibador == 0)
+                        {
+                            objetoImpactado.GetComponent<Collider>().GetComponent<puzleespejos>().actibador = id;
+
+                        }
+                    }
+                }
+                if (hit.collider.CompareTag("Final"))
+                {
+                    objetoImpactado.GetComponent<Collider>().GetComponent<controladorpuzleespejos>().final = true;
+                }
+            }
+            else
+            {
+                // Si antes estï¿½bamos impactando y ahora no, el rayo ha dejado de impactar
+                if (objetoImpactado != null && objetoImpactado.GetComponent<Collider>().GetComponent<puzleespejos>().actibador == id)
+                {
+
+                    objetoImpactado.GetComponent<Collider>().GetComponent<puzleespejos>().impacto = false;
+                    objetoImpactado = null;  // Restablecer el objeto impactado
+                }
+                else
+                {
+                    objetoImpactado = null;
+
+                }
+
+            }
+                // Aqui puedes hacer algo cuando el rayo golpea un objeto, como aplicar dato o activar una animaciï¿½n
+            }
+
+
+
         }
-      
-        print(gameObject.transform.rotation);
 
-        StopCoroutine(cambiocamara());
+
+        IEnumerator cambiocamara()
+        {
+
+            // camara.gameObject.transform.position = punto.transform.position;
+            while (Mathf.Abs(gameObject.transform.eulerAngles.y - rotacion) > 00.1f)
+            {
+                // Esperar 0.001 segundos entre cada movimiento
+                yield return new WaitForSeconds(0.001f);
+
+                // Crear un Quaternion a partir de la rotaciï¿½n deseada en el eje Y
+                Quaternion rotacionDeseada = Quaternion.Euler(0, rotacion, 0);
+
+                // Interpolar la rotaciï¿½n actual hacia la rotaciï¿½n deseada
+                gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotacionDeseada, 2 * Time.deltaTime);
+            }
+
+
+
+            StopCoroutine(cambiocamara());
+        }
+
+
+
+
+
+    public void reinicio()
+    {
+        posicion=posicion_inicial;
+        RotarEspejo();
     }
-}
+    }
+

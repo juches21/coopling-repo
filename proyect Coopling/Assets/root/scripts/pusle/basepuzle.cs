@@ -137,6 +137,14 @@ public class basepuzle : MonoBehaviour
         panelpuzzle.SetActive(false);
     }
 
-   // public void salir()
+    public void fallo()
+    {
+        controlador.GetComponent<controlador>().contarfallos();
+    }
+
+    public void acierto()
+    {
+        StartCoroutine(volvercambiocamara());
+    }
 }
 

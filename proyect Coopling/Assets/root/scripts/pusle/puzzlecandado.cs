@@ -44,15 +44,17 @@ public class puzzlecandado : MonoBehaviour
 
 
     }
-    
+
     public void correcto()
     {
-        StartCoroutine(pass());
+
+        gameObject.GetComponent<basepuzle>().acierto();
     }
 
     public void incorrecto()
     {
-        StartCoroutine(notpass());
+
+        gameObject.GetComponent<basepuzle>().fallo();
     }
 
 

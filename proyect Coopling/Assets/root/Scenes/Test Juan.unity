@@ -2484,6 +2484,7 @@ MonoBehaviour:
   camara: {fileID: 330585543}
   puntopuzzle: {fileID: 1805418830}
   puntooriginal: {fileID: 612944579}
+  controlador: {fileID: 1916277903}
   puzzle: 0
   panelcontroles: {fileID: 1700272565}
   panelpuzzle: {fileID: 1112650600}
@@ -5062,7 +5063,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 593790728}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1717150311}
+        m_TargetAssemblyTypeName: basepuzle, Assembly-CSharp
+        m_MethodName: salir
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &593790728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9385,7 +9398,7 @@ Transform:
   m_GameObject: {fileID: 1036156413}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.48948154, z: -0, w: -0.8720136}
-  m_LocalPosition: {x: -3.4, y: 3.3, z: -68.29}
+  m_LocalPosition: {x: -1.7, y: 3.3, z: -66.2}
   m_LocalScale: {x: 0.26980826, y: 0.26980826, z: 0.26980826}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10795,6 +10808,7 @@ MonoBehaviour:
   camara: {fileID: 330585543}
   puntopuzzle: {fileID: 504355788}
   puntooriginal: {fileID: 612944579}
+  controlador: {fileID: 1916277903}
   puzzle: 1
   panelcontroles: {fileID: 1700272565}
   panelpuzzle: {fileID: 473559671}
@@ -11955,6 +11969,7 @@ MonoBehaviour:
   camara: {fileID: 330585543}
   puntopuzzle: {fileID: 1533104888}
   puntooriginal: {fileID: 612944579}
+  controlador: {fileID: 1916277903}
   puzzle: 4
   panelcontroles: {fileID: 1700272565}
   panelpuzzle: {fileID: 1317107235}
@@ -13563,7 +13578,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1428277857}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1717150308}
+        m_TargetAssemblyTypeName: puzlesimbolos, Assembly-CSharp
+        m_MethodName: comprovar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1428277857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15688,7 +15715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15982,6 +16009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageToRotate_externo: {fileID: 1052668784}
   imageToRotate_interno: {fileID: 670149636}
+  id_espejo: 0
   rotacion_externo: 0
   posicion_externo: 0
   rotacion_interno: 0
@@ -16043,6 +16071,7 @@ MonoBehaviour:
   camara: {fileID: 330585543}
   puntopuzzle: {fileID: 826798738}
   puntooriginal: {fileID: 612944579}
+  controlador: {fileID: 1916277903}
   puzzle: 0
   panelcontroles: {fileID: 1700272565}
   panelpuzzle: {fileID: 1685721671}
@@ -19260,6 +19289,7 @@ MonoBehaviour:
   camara: {fileID: 330585543}
   puntopuzzle: {fileID: 2106671624}
   puntooriginal: {fileID: 612944579}
+  controlador: {fileID: 0}
   puzzle: 2
   panelcontroles: {fileID: 1700272565}
   panelpuzzle: {fileID: 1710932423}

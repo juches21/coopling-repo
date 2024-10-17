@@ -209,7 +209,7 @@ public class puzleespejos : MonoBehaviour
 
 
 
-            StopCoroutine(cambiocamara());
+          
         }
 
 

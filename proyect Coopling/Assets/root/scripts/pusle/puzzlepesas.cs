@@ -55,45 +55,35 @@ public class puzzlepesas : MonoBehaviour
            
         }
 
-        if (valoractual == valorcorrecto)
+   
+
+
+    }
+
+
+    public void comprovar()
+    {
+        if (valorcorrecto==valoractual)
         {
-            correcto();
+            gameObject.GetComponent<basepuzle>().acierto();
             valorcorrecto = 0;
+
+
         }
+        else
+        {
+            gameObject.GetComponent<basepuzle>().fallo();
 
-
-    }
-
-    public void correcto()
-    {
-        StartCoroutine(pass());
-    }
-
-    public void incorrecto()
-    {
-        StartCoroutine(notpass());
+        }
     }
 
 
-    IEnumerator pass()
-    {
-        panel.gameObject.GetComponent<Image>().color = colorpanelverde;
-        yield return new WaitForSeconds(0.5f);
-        panel.gameObject.GetComponent<Image>().color = colorpanel;
-        yield return new WaitForSeconds(0.5f);
-        gameObject.GetComponent<basepuzle>().StartCoroutine("volvercambiocamara");
-        puerta.SetActive(false);
 
 
 
-    }
 
-    IEnumerator notpass()
-    {
-        panel.gameObject.GetComponent<Image>().color = colorpanelrojo;
-        yield return new WaitForSeconds(0.5f);
-        panel.gameObject.GetComponent<Image>().color = colorpanel;
-    }
+
+
 
 
     public void ponerpesa1()

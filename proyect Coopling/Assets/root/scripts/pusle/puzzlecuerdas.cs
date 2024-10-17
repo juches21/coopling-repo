@@ -28,30 +28,16 @@ public class puzzlecuerdas : MonoBehaviour
 
     public void correcto()
     {
-        StartCoroutine(pass());
+      
+        gameObject.GetComponent<basepuzle>().acierto();
     }
 
     public void incorrecto()
     {
-        StartCoroutine(notpass());
+       
+        gameObject.GetComponent<basepuzle>().fallo();
     }
 
 
-    IEnumerator pass()
-    {
-        print("correcto");
-        yield return new WaitForSeconds(0.5f);
-        gameObject.GetComponent<basepuzle>().StartCoroutine("volvercambiocamara");
-        //puerta.SetActive(false);
-
-
-
-    }
-
-    IEnumerator notpass()
-    {
-        print("fallo");
-        yield return new WaitForSeconds(0.5f);
-      
-    }
+    
 }

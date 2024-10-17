@@ -9,7 +9,6 @@ public class puzlesimbolos : MonoBehaviour
     // Start is called before the first frame update
  
 
-    //public float rotationSpeed = 90f; // grados por segundo
    
 
 
@@ -17,9 +16,9 @@ public class puzlesimbolos : MonoBehaviour
     public GameObject imageToRotate_externo;
     public GameObject imageToRotate_interno;
 
-    
 
-   
+    public int id_espejo;
+
 
     public int rotacion_externo;
     public int posicion_externo;
@@ -30,12 +29,18 @@ public class puzlesimbolos : MonoBehaviour
     public int posicion_externo_correcta;
     public int posicion_interno_correcta;
 
+
+    private void Start()
+    {
+        gameObject.GetComponent<BoxCollider>().enabled=false;
+    }
     // Start is called before the first frame update
     private void Update()
     {
-        if(posicion_externo==posicion_externo_correcta && posicion_interno == posicion_interno_correcta)
+        if( id_espejo== 3)
         {
-            gameObject.GetComponent<basepuzle>().StartCoroutine("volvercambiocamara");
+            gameObject.GetComponent<BoxCollider>().enabled = true;
+
         }
     }
     public void derecha_externo()
@@ -144,12 +149,12 @@ public class puzlesimbolos : MonoBehaviour
 
     IEnumerator rotar_externo()
     {
-        print("test1");
+       
 
         // Mientras la diferencia de la rotación actual y la rotación deseada sea mayor a 0.5 grados
         while (Quaternion.Angle(imageToRotate_externo.transform.rotation, Quaternion.Euler(rotacion_externo, 0, 0)) > 0.5f)
         {
-            print("test2");
+           
 
             // Esperar 0.001 segundos entre cada movimiento
             yield return new WaitForSeconds(0.001f);
@@ -179,6 +184,22 @@ public class puzlesimbolos : MonoBehaviour
         }
 
         // La corrutina se detendrá automáticamente cuando termine el bucle
+    }
+
+
+    public void comprovar()
+    {
+        if (posicion_externo == posicion_externo_correcta && posicion_interno == posicion_interno_correcta)
+        {
+            gameObject.GetComponent<basepuzle>().acierto();
+
+
+        }
+        else
+        {
+            gameObject.GetComponent<basepuzle>().fallo();
+
+        }
     }
 
 }

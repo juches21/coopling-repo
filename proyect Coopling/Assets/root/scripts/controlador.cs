@@ -24,7 +24,7 @@ public class controlador : MonoBehaviour
     void Start()
     {
 
-        
+        fallos = 1f;
 
 
     }
@@ -46,12 +46,28 @@ public class controlador : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, cents);
 
         */
+        if(timerTime>= 1200)
+        {
+            finjuego();
+        }
+       
     }
 
-    void contarfallos()
+    public void contarfallos()
     {
-        print("contar");
-        fallos += 0.5f;
+        if(fallos >= 2.5f)
+        {
+            finjuego();
+        }
+        else
+        {
+        fallos += 1f;
 
+        }
+
+    }
+    public void finjuego()
+    {
+        print("dead");
     }
 }

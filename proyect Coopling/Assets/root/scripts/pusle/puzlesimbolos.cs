@@ -1,237 +1,184 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+
 public class puzlesimbolos : MonoBehaviour
 {
     // Start is called before the first frame update
  
 
     //public float rotationSpeed = 90f; // grados por segundo
-    private float currentRotationSpeed_externo = 0f; // velocidad actual
-    private float currentRotationSpeed_interno = 0f; // velocidad actual
+   
 
 
     // Referencias a la imagen y botones
-    public Image imageToRotate_externo;
-    public Image imageToRotate_interno;
+    public GameObject imageToRotate_externo;
+    public GameObject imageToRotate_interno;
 
-    public Button buttonRight_externo;
-    public Button buttonLeft_externo;
+    
 
-    public Button buttonRight_interno;
-    public Button buttonLeft_interno;
+   
 
-    public bool rotationOn_externo = false;
-    public bool rotationOn_interno = false;
+    public int rotacion_externo;
+    public int posicion_externo;
 
-    public bool Rueda_externo = false;
-    public bool Rueda_interno = false;
+    public int rotacion_interno;
+    public int posicion_interno;
 
-    public int Max_externo;
-    public int Min_externo;
-
-    public int Max_interno;
-    public int Min_interno;
-
+    public int posicion_externo_correcta;
+    public int posicion_interno_correcta;
 
     // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        //Asignar los metodos a los botones
-
-        buttonRight_externo.onClick.AddListener(RotateRight_externo);
-
-        buttonLeft_externo.onClick.AddListener(RotateLeft_externo);
-
-
-
-        buttonRight_interno.onClick.AddListener(RotateRight_interno);
-
-        buttonLeft_interno.onClick.AddListener(RotateLeft_interno);
-        //asignar metodos para detener al soltar
-
+        if(posicion_externo==posicion_externo_correcta && posicion_interno == posicion_interno_correcta)
+        {
+            gameObject.GetComponent<basepuzle>().StartCoroutine("volvercambiocamara");
+        }
+    }
+    public void derecha_externo()
+    {
+        posicion_externo++;
+        print(posicion_externo);
+        Rotarcirculo_externo();
      
+    }
+
+    public void derecha_interno()
+    {
+        posicion_interno++;
+        Rotarcirculo_interno();
+    }
+
+
+    
+
+    public void Rotarcirculo_externo()
+    {
+        
+        switch (posicion_externo)
+        {
+            case 0:
+                rotacion_externo = 0;
+                break;
+            case 1:
+                rotacion_externo = 45;
+                break;
+            case 2:
+                rotacion_externo = 90;
+                break;
+            case 3:
+                rotacion_externo = 135;
+                break;
+            case 4:
+                rotacion_externo = 180;
+                break;
+            case 5:
+                rotacion_externo = 225;
+                break;
+            case 6:
+                rotacion_externo = 270;
+                break;
+            case 7:
+                rotacion_externo = 315;
+                break;
+            default:
+                rotacion_externo = 0;
+                posicion_externo = 0;
+                break;
+        }
+
+        //juaneselmejor:)
+        StartCoroutine(rotar_externo());
+
+
+    }
+
+    public void Rotarcirculo_interno()
+    {
+       
+        switch (posicion_interno)
+        {
+            case 0:
+                rotacion_interno = 0;
+                break;
+            case 1:
+                rotacion_interno = 45;
+                break;
+            case 2:
+                rotacion_interno = 90;
+                break;
+            case 3:
+                rotacion_interno = 135;
+                break;
+            case 4:
+                rotacion_interno = 180;
+                break;
+            case 5:
+                rotacion_interno = 225;
+                break;
+            case 6:
+                rotacion_interno = 270;
+                break;
+            case 7:
+                rotacion_interno = 315;
+                break;
+            default:
+                rotacion_interno = 0;
+                posicion_interno = 0;
+                break;
+        }
+
+        //juaneselmejor:)
+        StartCoroutine(rotar_interno());
 
 
     }
 
     // Update is called once per frame
-    void Update()
+
+
+
+
+    IEnumerator rotar_externo()
     {
-        // Rota la image segun la velocidad actual
+        print("test1");
 
-        if (currentRotationSpeed_externo != 0)
+        // Mientras la diferencia de la rotación actual y la rotación deseada sea mayor a 0.5 grados
+        while (Quaternion.Angle(imageToRotate_externo.transform.rotation, Quaternion.Euler(rotacion_externo, 0, 0)) > 0.5f)
         {
-            imageToRotate_externo.transform.Rotate(Vector3.forward, currentRotationSpeed_externo * Time.deltaTime);
+            print("test2");
+
+            // Esperar 0.001 segundos entre cada movimiento
+            yield return new WaitForSeconds(0.001f);
+
+            Quaternion rotacionDeseada_ex = Quaternion.Euler(rotacion_externo, 90, 90);
+
+            // Interpolar la rotación actual hacia la rotación deseada
+            imageToRotate_externo.transform.rotation = Quaternion.Slerp(imageToRotate_externo.transform.rotation, rotacionDeseada_ex, 2 * Time.deltaTime);
         }
 
-        if (imageToRotate_externo.transform.rotation.z < Max_externo && imageToRotate_externo.transform.rotation.z > Min_externo)
-        {
-            Rueda_externo = true;
-        }
-        else
-        {
-            Rueda_externo = false;
-        }
-
-        /*  if (imageToRotate_externo.transform.rotation.z < -Max_externo && imageToRotate_externo.transform.rotation.z > -Min_externo)
-          {
-              Rueda_externo = true;
-          }
-          else
-          {
-              Rueda_externo = false;
-          }*/
-
-
-
-
-
-
-        if (currentRotationSpeed_interno != 0)
-        {
-            imageToRotate_interno.transform.Rotate(Vector3.forward, currentRotationSpeed_interno * Time.deltaTime);
-        }
-
-        if (imageToRotate_interno.transform.rotation.z < Max_interno && imageToRotate_interno.transform.rotation.z > Min_interno)
-        {
-            Rueda_interno = true;
-        }
-        else
-        {
-            Rueda_interno = false;
-        }
-
-        /*if (imageToRotate_interno.transform.rotation.z < -Max_interno && imageToRotate_interno.transform.rotation.z > -Min_interno)
-        {
-            Rueda_interno = true;
-        }
-        else
-        {
-            Rueda_interno = false;
-        }*/
-
+        // Fin de la corrutina cuando el bucle termina
     }
 
-
-
-
-
-    private void RotateImage_externo(float direction)
+    IEnumerator rotar_interno()
     {
-
-        imageToRotate_externo.transform.Rotate(Vector3.forward, direction);
-
-    }
-
-
-
-    public void RotateRight_externo()
-    {
-        if (!rotationOn_externo)
+        // Mientras la diferencia de rotación entre la actual y la deseada sea mayor a 0.1 grados
+        while (Quaternion.Angle(imageToRotate_interno.transform.rotation, Quaternion.Euler(0, rotacion_interno, 0)) > 0.1f)
         {
-            currentRotationSpeed_externo = 90; //Establece la velocidad a la derecha
-            rotationOn_externo = true;
-        }
-        else
-        {
-            StopRotation_externo();
-    
+            // Esperar 0.001 segundos entre cada movimiento
+            yield return new WaitForSeconds(0.001f);
+
+            // Crear un Quaternion a partir de la rotación deseada en el eje Y
+            Quaternion rotacionDeseada = Quaternion.Euler( rotacion_interno, 90,90);
+
+            // Interpolar la rotación actual hacia la rotación deseada
+            imageToRotate_interno.transform.rotation = Quaternion.Slerp(imageToRotate_interno.transform.rotation, rotacionDeseada, 2 * Time.deltaTime);
         }
 
-
-
+        // La corrutina se detendrá automáticamente cuando termine el bucle
     }
 
-    public void RotateLeft_externo()
-    {
-
-        if (!rotationOn_externo)
-        {
-            currentRotationSpeed_externo = -90; //Establece la velocidad a la derecha
-            rotationOn_externo = true;
-        }
-        else
-        {
-            StopRotation_externo();
-            
-        }
-
-
-    }
-
-    public void StopRotation_externo()
-    {
-
-        currentRotationSpeed_externo = 0f; //Detetiene la rotacion
-        rotationOn_externo = false;
-
-    }
-
-
-
-
-
-
-
-    //--------------------------------------
-
-
-
-
-
-
-
-
-    private void RotateImage_interno(float direction)
-    {
-
-        imageToRotate_interno.transform.Rotate(Vector3.forward, direction);
-
-    }
-
-
-
-    public void RotateRight_interno()
-    {
-        if (!rotationOn_interno)
-        {
-            currentRotationSpeed_interno = 90; //Establece la velocidad a la derecha
-            rotationOn_interno = true;
-        }
-        else
-        {
-            StopRotation_interno();
-
-        }
-
-
-
-    }
-
-    public void RotateLeft_interno()
-    {
-
-        if (!rotationOn_interno)
-        {
-            currentRotationSpeed_interno = -90; //Establece la velocidad a la derecha
-            rotationOn_interno = true;
-        }
-        else
-        {
-            StopRotation_interno();
-
-        }
-
-
-    }
-
-    public void StopRotation_interno()
-    {
-
-        currentRotationSpeed_interno = 0f; //Detetiene la rotacion
-        rotationOn_interno = false;
-
-    }
 }

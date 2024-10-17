@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class basepuzle : MonoBehaviour
 {
     public GameObject camara;
     public GameObject puntopuzzle;
     public GameObject puntooriginal;
+
+    public GameObject controlador;
+
 
     Vector3 posicioncamara;
     public int puzzle;
@@ -27,6 +31,7 @@ public class basepuzle : MonoBehaviour
         // gameObject.SetActive(false);
        // posicioncamara = camara.transform.position;
         StartCoroutine(cambiocamara());
+       
         // Aquí puedes agregar la función que quieres ejecutar
     }
 
@@ -57,23 +62,12 @@ public class basepuzle : MonoBehaviour
 
 
 
-        /*if (cambio)
-        {
-
-
-        // camara.gameObject.transform.position = punto.transform.position;
-        while (Vector3.Distance(camara.transform.position, punto.transform.position) > 0.01f)
-        {
-
-            camara.transform.position = Vector3.Lerp(camara.transform.position, punto.transform.position, 0.0001f * Time.deltaTime);
-        }
-
-            // camara.gameObject.transform.LookAt(gameObject.transform);
-        }
-  
-    }*/
+     
     }
-   
+   public void salir()
+    {
+        StartCoroutine(salirpuzle());
+    }
     IEnumerator cambiocamara()
     {
        
@@ -89,11 +83,31 @@ public class basepuzle : MonoBehaviour
         if (puzzle == 1)
         {
             gameObject.GetComponent<puzzlecandado>().aparecer = true;
+        }if(puzzle == 4)
+        {
+            gameObject.GetComponent<puzzlepesas>().aparecer = true;
         }
-        //StopCoroutine(cambiocamara());
-        // camara.gameObject.transform.LookAt(gameObject.transform);
+      
         }
     IEnumerator volvercambiocamara()
+    {
+        while (Vector3.Distance(camara.transform.position, puntooriginal.transform.position) > 0.01f)
+        {
+            yield return new WaitForSeconds(0.001f);
+          
+            camara.transform.position = Vector3.Lerp(camara.transform.position, puntooriginal.transform.position, 2 * Time.deltaTime);
+
+            camara.transform.rotation = Quaternion.Slerp(camara.transform.rotation, puntooriginal.transform.rotation, 2 * Time.deltaTime);
+            //camara.gameObject.transform.LookAt(gameObject.transform);
+        }
+        cambiaruicontroles();
+        gameObject.SetActive(false);
+
+    }
+
+
+
+    IEnumerator salirpuzle()
     {
         while (Vector3.Distance(camara.transform.position, puntooriginal.transform.position) > 0.01f)
         {
@@ -105,7 +119,7 @@ public class basepuzle : MonoBehaviour
             //camara.gameObject.transform.LookAt(gameObject.transform);
         }
         cambiaruicontroles();
-        gameObject.SetActive(false);
+      
 
     }
 
@@ -122,5 +136,7 @@ public class basepuzle : MonoBehaviour
         panelcontroles.SetActive(true);
         panelpuzzle.SetActive(false);
     }
+
+   // public void salir()
 }
 

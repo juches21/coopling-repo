@@ -29,13 +29,13 @@ public class controladorpuzleespejos : MonoBehaviour
         {
             if(combinacion.SequenceEqual(combinacioncorrecta))
             {
-                print("correcto");
+               
                 pass();
                 final = false;
             }
             else
             {
-                print("fallo");
+               
                 reinicio();
                 final = false;
             }
@@ -66,11 +66,11 @@ public class controladorpuzleespejos : MonoBehaviour
 
     public void actibarcandado(int espejo)
     {
-        print("puzle candado on");
+       
     }
     public void pass()
 {
-        print("puzle espejos resuelto");
+       
 }
 
     public void reinicio()

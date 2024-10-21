@@ -10,8 +10,9 @@ public class controlador : MonoBehaviour
 
     // Start is called before the first frame update
 
+    public static controlador instancia;
 
-
+    bool play=true;
     [SerializeField] private TMP_Text timerText;
     public float fallos = 1f;
 
@@ -19,7 +20,19 @@ public class controlador : MonoBehaviour
     [SerializeField, Tooltip("Tiempo en segundos")] private float timerTime;
     private int minutes, seconds, cents;
 
-
+    void Awake()
+    {
+        // Implementar el patrón singleton
+        if (instancia == null)
+        {
+            instancia = this;
+            DontDestroyOnLoad(gameObject); // No destruir este objeto al cargar una nueva escena
+        }
+        else if (instancia != this)
+        {
+            Destroy(gameObject); // Destruir la nueva instancia si ya existe una
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +45,7 @@ public class controlador : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (play){
 
         timerTime += Time.deltaTime * fallos;
 
@@ -48,16 +62,21 @@ public class controlador : MonoBehaviour
         */
         if(timerTime>= 1200)
         {
+                play = false;
+        }
+        print(timerTime);
+        }
+        else
+        {
             finjuego();
         }
-       
     }
 
     public void contarfallos()
     {
         if(fallos >= 2.5f)
         {
-            finjuego();
+            play = false;
         }
         else
         {
@@ -71,3 +90,4 @@ public class controlador : MonoBehaviour
         print("dead");
     }
 }
+
